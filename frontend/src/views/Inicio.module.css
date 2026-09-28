@@ -1,0 +1,69 @@
+.menuContainer {
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+}
+
+.tagline {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #718096;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.welcomeTitle {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #000000;
+  letter-spacing: -1px;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.description {
+  font-size: 0.95rem;
+  color: #4a5568;
+  line-height: 1.5;
+  margin-bottom: 3rem;
+}
+
+.actionsGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.btnAction {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnLogin {
+  background-color: #0f2c59;
+  color: #ffffff;
+  border: none;
+}
+
+.btnLogin:hover {
+  background-color: #0a1f3f;
+}
+
+.btnRegister {
+  background-color: #ffffff;
+  color: #0f2c59;
+  border: 1px solid #0f2c59;
+}
+
+.btnRegister:hover {
+  background-color: #f7fafc;
+}

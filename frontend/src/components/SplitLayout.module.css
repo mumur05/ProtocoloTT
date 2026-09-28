@@ -1,0 +1,80 @@
+.page {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: #ffffff;
+  position: relative;
+}
+
+.leftPanel {
+  flex: 1;
+  background: linear-gradient(135deg, #0f2c59 0%, #071630 100%);
+  color: #ffffff;
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.grid::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+  pointer-events: none;
+}
+
+.brandContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brandText h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.brandText p {
+  font-size: 0.75rem;
+  color: #a0aec0;
+  margin-top: 2px;
+}
+
+.quoteContainer {
+  max-width: var(--quote-width);
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.quoteText {
+  font-size: var(--quote-size);
+  font-style: italic;
+  line-height: var(--quote-line-height);
+  color: #e2e8f0;
+  font-weight: 300;
+}
+
+.footerLeft {
+  font-size: 0.8rem;
+  color: var(--footer-color);
+  letter-spacing: var(--footer-spacing);
+}
+
+.rightPanel {
+  width: 45%;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--right-padding);
+  overflow-y: var(--right-overflow);
+}

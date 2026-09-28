@@ -1,0 +1,21 @@
+# Dependencias de Node (se reinstalan con: cd frontend && npm install)
+node_modules/
+
+# Cache de Python
+__pycache__/
+*.pyc
+
+# Entornos virtuales de Python
+venv/
+.venv/
+
+# Archivos del sistema y del editor
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/
+
+# Subidas y temporales
+*.log
+*.tmp

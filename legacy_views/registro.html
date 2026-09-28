@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlataformaTT - Registro Adaptativo</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background-color: #ffffff;
+        }
+
+        /* --- SECCIÓN IZQUIERDA (Panel Azul) --- */
+        .left-panel {
+            flex: 1;
+            background: linear-gradient(135deg, #0f2c59 0%, #071630 100%);
+            color: #ffffff;
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .left-panel::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-text h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-text p {
+            font-size: 0.75rem;
+            color: #a0aec0;
+            margin-top: 2px;
+        }
+
+        .quote-container {
+            max-width: 480px;
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
+        .quote-text {
+            font-size: 1.5rem;
+            font-style: italic;
+            line-height: 1.6;
+            color: #e2e8f0;
+            font-weight: 300;
+        }
+
+        .footer-left {
+            font-size: 0.8rem;
+            color: #5a6a85;
+            letter-spacing: 1px;
+        }
+
+        /* --- SECCIÓN DERECHA --- */
+        .right-panel {
+            width: 45%;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+            padding: 2.5rem 4rem;
+            overflow-y: auto;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 440px;
+        }
+
+        .tagline {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #718096;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+        }
+
+        .welcome-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #000000;
+            letter-spacing: -0.5px;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        /* --- TABS / CONMUTADOR DE ROL --- */
+        .role-tabs {
+            display: flex;
+            background-color: #f1f5f9;
+            padding: 4px;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #64748b;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .tab-btn.active {
+            background-color: #0f2c59;
+            color: #ffffff;
+            box-shadow: 0 2px 4px rgba(15, 44, 89, 0.15);
+        }
+
+        /* Grid para Nombres y Apellidos */
+        .row-grid-names {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1fr;
+            gap: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 1.1rem;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.85rem;
+            color: #4a5568;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.92rem;
+            color: #1e293b;
+            background-color: #ffffff;
+            outline: none;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .input-field::placeholder {
+            color: #94a3b8;
+        }
+
+        .input-field:focus {
+            border-color: #0f2c59;
+            box-shadow: 0 0 0 3px rgba(15, 44, 89, 0.1);
+        }
+
+        /* Mensaje de validación de correo */
+        .email-domain-hint {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .email-domain-hint strong {
+            color: #0f2c59;
+        }
+
+        /* Estilo para mensajes de error */
+        .error-toast {
+            display: none;
+            background-color: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            margin-bottom: 1.2rem;
+            font-weight: 500;
+        }
+
+        /* --- BOTONES DE ACCIÓN EN FILA --- */
+        .buttons-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 1.5rem;
+        }
+
+        .btn-submit {
+            flex: 1;
+            background-color: #0f2c59;
+            color: #ffffff;
+            border: none;
+            padding: 13px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #0a1f3f;
+        }
+
+        .btn-back {
+            flex: 1;
+            background-color: #ffffff;
+            color: #0f2c59;
+            border: 1px solid #0f2c59;
+            padding: 13px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-back:hover {
+            background-color: #f7fafc;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="left-panel">
+        <div class="brand-container">
+            <div class="brand-text">
+                <h2>PlataformaTT</h2>
+                <p>ESCOM - INSTITUTO POLITÉCNICO NACIONAL</p>
+            </div>
+        </div>
+
+        <div class="quote-container">
+            <p class="quote-text">
+                "Digitalizamos los procesos de Protocolo, TT1 y TT2 en un único expediente auditable, con asignación semántica de sinodales y calendarización sin solapamientos."
+            </p>
+        </div>
+
+        <div class="footer-left">
+            TT 2026-B077 • V0.1 PROTOTIPO
+        </div>
+    </div>
+
+    <div class="right-panel">
+        <div class="form-container">
+            <p class="tagline">Nuevo Expediente</p>
+            <h1 class="welcome-title">REGISTRO USUARIO</h1>
+
+            <!-- Seleccionador dinámico de Rol -->
+            <div class="role-tabs">
+                <button type="button" class="tab-btn active" id="tab-alumno" onclick="switchRole('alumno')">
+                    Alumno
+                </button>
+                <button type="button" class="tab-btn" id="tab-profesor" onclick="switchRole('profesor')">
+                    Profesor
+                </button>
+            </div>
+
+            <!-- Banner de alerta de validación -->
+            <div class="error-toast" id="error-message"></div>
+
+            <form action="registrar.php" method="POST" onsubmit="return validateEmailDomain()">                
+                <!-- Campo oculto para pasar el tipo de rol al backend -->
+                <input type="hidden" id="rol" name="rol" value="alumno">
+
+                <div class="row-grid-names">
+                    <div class="form-group">
+                        <label class="input-label" for="nombre">Nombre</label>
+                        <input class="input-field" type="text" id="nombre" name="nombre" placeholder="Tu(s) nombre(s)" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label" for="apellido_pat">Apellido pat</label>
+                        <input class="input-field" type="text" id="apellido_pat" name="apellido_paterno" placeholder="Paterno" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label" for="apellido_mat">Apellido mat</label>
+                        <input class="input-field" type="text" id="apellido_mat" name="apellido_materno" placeholder="Materno">
+                    </div>
+                </div>
+
+                <!-- Campo dinámico: Boleta (Alumno) o No. Empleado (Profesor) -->
+                <div class="form-group">
+                    <label class="input-label" id="label-identificador" for="identificador">Boleta</label>
+                    <input class="input-field" type="text" id="identificador" name="boleta" pattern="\d{10}" maxlength="10" placeholder="Ej. 2026630077" required>
+                </div>
+
+                <!-- Correo con validación dinámica -->
+                <div class="form-group">
+                    <label class="input-label" for="correo">Correo institucional</label>
+                    <input class="input-field" type="email" id="correo" name="correo_institucional" placeholder="usuario@alumno.ipn.mx" required>
+                    <span class="email-domain-hint" id="domain-hint">Dominio requerido: <strong>@alumno.ipn.mx</strong></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="input-label" for="usuario">Usuario</label>
+                    <input class="input-field" type="text" id="usuario" name="usuario" placeholder="Crea un usuario único" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="input-label" for="password">Contraseña</label>
+                    <input class="input-field" type="password" id="password" name="contrasena" placeholder="••••••••••••" required>
+                </div>
+
+                <div class="buttons-group">
+                    <button type="submit" class="btn-submit">Registrar</button>
+                    <!-- Ruta relativa corregida -->
+                    <a href="inicio.html" class="btn-back">Regresar al Inicio</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function switchRole(role) {
+            const tabAlumno = document.getElementById('tab-alumno');
+            const tabProfesor = document.getElementById('tab-profesor');
+            const rolInput = document.getElementById('rol');
+            const labelIdentificador = document.getElementById('label-identificador');
+            const fieldIdentificador = document.getElementById('identificador');
+            const correoInput = document.getElementById('correo');
+            const domainHint = document.getElementById('domain-hint');
+            const errorMessage = document.getElementById('error-message');
+
+            errorMessage.style.display = 'none';
+
+            if (role === 'alumno') {
+                tabAlumno.classList.add('active');
+                tabProfesor.classList.remove('active');
+                rolInput.value = 'alumno';
+
+                labelIdentificador.textContent = 'Boleta';
+                fieldIdentificador.name = 'boleta';
+                fieldIdentificador.placeholder = 'Ej. 2026630077';
+                fieldIdentificador.pattern = '\\d{10}';
+                fieldIdentificador.maxLength = 10;
+
+                correoInput.placeholder = 'usuario@alumno.ipn.mx';
+                domainHint.innerHTML = 'Dominio requerido: <strong>@alumno.ipn.mx</strong>';
+            } else {
+                tabProfesor.classList.add('active');
+                tabAlumno.classList.remove('active');
+                rolInput.value = 'profesor';
+
+                labelIdentificador.textContent = 'Número de Empleado';
+                fieldIdentificador.name = 'num_empleado';
+                fieldIdentificador.placeholder = 'Ej. 2012098765';
+                fieldIdentificador.removeAttribute('pattern');
+                fieldIdentificador.maxLength = 10;
+
+                correoInput.placeholder = 'usuario@ipn.mx';
+                domainHint.innerHTML = 'Dominio requerido: <strong>@ipn.mx</strong>';
+            }
+        }
+
+        function validateEmailDomain() {
+            const currentRole = document.getElementById('rol').value;
+            const email = document.getElementById('correo').value.trim().toLowerCase();
+
+            if (currentRole === 'alumno') {
+                if (!email.endsWith('@alumno.ipn.mx')) {
+                    showError('Como alumno, debes ingresar un correo institucional válido terminado en @alumno.ipn.mx');
+                    return false;
+                }
+            } else if (currentRole === 'profesor') {
+                if (!email.endsWith('@ipn.mx') || email.endsWith('@alumno.ipn.mx')) {
+                    showError('Como profesor, debes ingresar un correo institucional válido terminado en @ipn.mx');
+                    return false;
+                }
+            }
+            
+            document.getElementById('error-message').style.display = 'none';
+            return true;
+        }
+
+        function showError(message) {
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

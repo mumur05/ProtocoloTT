@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlataformaTT - Validación de Correo</title>
+    <style>
+        * {
+            box-shadow: none;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background-color: #ffffff;
+        }
+
+        /* --- SECCIÓN IZQUIERDA --- */
+        .left-panel {
+            flex: 1;
+            background: linear-gradient(135deg, #0f2c59 0%, #071630 100%);
+            color: #ffffff;
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .left-panel::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-text h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-text p {
+            font-size: 0.75rem;
+            color: #a0aec0;
+            margin-top: 2px;
+        }
+
+        .quote-container {
+            max-width: 500px;
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
+        .quote-text {
+            font-size: 1.6rem;
+            font-style: italic;
+            line-height: 1.5;
+            color: #e2e8f0;
+            font-weight: 300;
+        }
+
+        .footer-left {
+            font-size: 0.8rem;
+            color: #718096;
+            letter-spacing: 1px;
+        }
+
+        /* --- SECCIÓN DERECHA --- */
+        .right-panel {
+            width: 45%;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .tagline {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #718096;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .welcome-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #000000;
+            letter-spacing: -0.5px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            color: #4a5568;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.85rem;
+            color: #4a5568;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            text-align: center;
+            color: #1a202c;
+            background-color: #ffffff;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .input-field:focus {
+            border-color: #0f2c59;
+            box-shadow: 0 0 0 3px rgba(15, 44, 89, 0.1);
+        }
+
+        /* --- ESTILO PARA EL MENSAJE DE ERROR --- */
+        .error-container {
+            height: 24px;
+            margin-top: 0.4rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .error-text {
+            font-size: 0.95rem;
+            color: #e53e3e;
+            font-weight: 600;
+            display: none;
+            text-transform: lowercase;
+        }
+
+        .input-field.is-invalid {
+            border-color: #e53e3e;
+            color: #e53e3e;
+            background-color: #fff5f5;
+        }
+
+        .input-field.is-invalid:focus {
+            box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.15);
+        }
+
+        /* --- BOTONES --- */
+        .buttons-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .btn-validate {
+            flex: 1;
+            background-color: #0f2c59;
+            color: #ffffff;
+            border: none;
+            padding: 13px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-validate:hover {
+            background-color: #0a1f3f;
+        }
+
+        .btn-resend {
+            flex: 1;
+            background-color: #ffffff;
+            color: #4a5568;
+            border: 1px solid #cbd5e1;
+            padding: 13px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-resend:disabled {
+            background-color: #f1f5f9;
+            color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .btn-cancel {
+            display: block;
+            width: 100%;
+            background-color: #ffffff;
+            color: #e53e3e;
+            border: 1px solid #e53e3e;
+            padding: 13px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-cancel:hover {
+            background-color: #fff5f5;
+        }
+
+        .timer-text {
+            font-size: 0.8rem;
+            color: #718096;
+            text-align: center;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="left-panel">
+        <div class="brand-container">
+            <div class="brand-text">
+                <h2>PlataformaTT</h2>
+                <p>ESCOM - INSTITUTO POLITÉCNICO NACIONAL</p>
+            </div>
+        </div>
+
+        <div class="quote-container">
+            <p class="quote-text">
+                "Digitalizamos los procesos de Protocolo, TT1 y TT2 en un único expediente auditable, con asignación semántica de sinodales y calendarización sin solapamientos."
+            </p>
+        </div>
+
+        <div class="footer-left">
+            TT 2026-B077 • V0.1 PROTOTIPO
+        </div>
+    </div>
+
+    <div class="right-panel">
+        <div class="form-container">
+            <p class="tagline">Seguridad de la cuenta</p>
+            <h1 class="welcome-title">Validación de correo</h1>
+            <p class="description">"Ingresa el token"</p>
+
+            <!-- Formulario conectado a validarToken.php -->
+            <form id="tokenForm" action="validarToken.php" method="POST">
+                <!-- Campo oculto para la Boleta o Número de Empleado -->
+                <input type="hidden" name="identificador" id="identificador">
+
+                <label class="input-label" for="token">Token de verificación</label>
+                <input class="input-field" type="text" id="token" name="token" placeholder="••••••" maxlength="6" pattern="\d{6}" required autocomplete="off">
+                
+                <div class="error-container">
+                    <span id="errorMsg" class="error-text">token incorrecto</span>
+                </div>
+
+                <div class="buttons-row">
+                    <button type="submit" class="btn-validate">Validar</button>
+                    <button type="button" id="resendBtn" class="btn-resend" disabled>Enviar otra vez (20s)</button>
+                </div>
+
+                <a href="registro.html" class="btn-cancel">Cancelar</a>
+            </form>
+
+            <p id="timerMessage" class="timer-text">Espera 20 segundos para solicitar un nuevo código.</p>
+        </div>
+    </div>
+
+    <script>
+        // --- EXTRAER DATOS Y ESTADO DE LA URL ---
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // Asignar el identificador (boleta o num_empleado) al input oculto
+        const id = urlParams.get('boleta') || urlParams.get('num_empleado') || urlParams.get('id');
+        if (id) {
+            document.getElementById('identificador').value = id;
+        }
+
+        // Mostrar estado de error si el backend redirige con ?error=invalid
+        const tokenInput = document.getElementById('token');
+        const errorMsg = document.getElementById('errorMsg');
+
+        if (urlParams.get('error') === 'invalid') {
+            tokenInput.classList.add('is-invalid');
+            errorMsg.style.display = 'block';
+        }
+
+        // --- CONTROL DEL TEMPORIZADOR (20 SEGUNDOS) ---
+        let timeLeft = 20;
+        const resendBtn = document.getElementById('resendBtn');
+        const timerMessage = document.getElementById('timerMessage');
+
+        const countdown = setInterval(() => {
+            timeLeft--;
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                resendBtn.disabled = false;
+                resendBtn.innerText = "Enviar otra vez";
+                timerMessage.innerText = "Ya puedes solicitar un nuevo token si no lo has recibido.";
+            } else {
+                resendBtn.innerText = `Enviar otra vez (${timeLeft}s)`;
+            }
+        }, 1000);
+
+        // Limpiar el estado de error cuando el usuario vuelva a escribir
+        tokenInput.addEventListener('input', () => {
+            tokenInput.classList.remove('is-invalid');
+            errorMsg.style.display = 'none';
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,159 @@
+.formContainer {
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.tagline {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #718096;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+
+.welcomeTitle {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 1rem;
+}
+
+.infoText {
+  font-size: 0.9rem;
+  color: #4a5568;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.infoText strong {
+  color: #0f2c59;
+}
+
+.tokenInput {
+  width: 100%;
+  letter-spacing: 12px;
+  font-size: 2rem;
+  text-align: center;
+  padding: 12px;
+  border: 2px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  font-weight: 700;
+  color: #0f2c59;
+  margin-bottom: 1.5rem;
+}
+
+.tokenInput:focus {
+  border-color: #0f2c59;
+  box-shadow: 0 0 0 3px rgba(15, 44, 89, 0.1);
+}
+
+.btnSubmit {
+  width: 100%;
+  background-color: #0f2c59;
+  color: #ffffff;
+  border: none;
+  padding: 13px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btnSubmit:hover {
+  background-color: #0a1f3f;
+}
+
+.alertError {
+  background-color: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalBox {
+  background: #ffffff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  animation: fadeIn 0.3s ease-out;
+}
+
+.iconCircle {
+  width: 60px;
+  height: 60px;
+  background-color: #dcfce7;
+  color: #16a34a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin: 0 auto 1.5rem auto;
+  font-weight: bold;
+}
+
+.modalTitle {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+}
+
+.modalDesc {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-bottom: 1.8rem;
+  line-height: 1.4;
+}
+
+.btnLogin {
+  display: inline-block;
+  width: 100%;
+  background-color: #0f2c59;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background-color 0.2s;
+}
+
+.btnLogin:hover {
+  background-color: #0a1f3f;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
